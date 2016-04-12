@@ -9,7 +9,7 @@ const CSS_MAPS = ENV!=='production';
 
 module.exports = {
 	context: `${__dirname}/src`,
-	entry: ['./components/Rating'],
+	entry: ['./index'],
 
 	output: {
 		path: `${__dirname}/build`,
@@ -21,7 +21,7 @@ module.exports = {
 	externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
-    "preact": "preact"
+    //"preact": "preact"
   },
 
 	resolve: {

@@ -5,14 +5,14 @@ import './style';
 
 let root;
 function init() {
-	let Rating = require('./components/Rating').default;
-	root = render(<Rating />, document.body, root);
+	let FormComposer = require('./components/FormComposer').default;
+	root = render(<FormComposer />, document.body, root);
 }
 
 init();
 
 if (module.hot) {
-	module.hot.accept('./components/Rating', () => requestAnimationFrame( () => {
+	module.hot.accept('./components/FormComposer', () => requestAnimationFrame( () => {
 		flushLogs();
 		init();
 	}) );
