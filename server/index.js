@@ -31,7 +31,7 @@ app.post('/create', function(req, res){
 
 app.listen(4444)
 
-function buildWidget() {
+function buildWidget(props) {
   var props = {
     form: {
       saveDestination: 'http://coralasks.theguardian.com/ask/44',
