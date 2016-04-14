@@ -1,4 +1,5 @@
-import { h, Component } from 'preact'
+import preact from 'preact'
+const { h, Component } = preact
 
 class TextArea extends Component {
   constructor(props, context) {
@@ -32,7 +33,7 @@ class TextArea extends Component {
   render() {
     return (
       <div>
-        <textarea 
+        <textarea
           style={ this.getStyles() }
           placeholder={this.props.placeholder}
           autoFocus="true"
@@ -43,7 +44,7 @@ class TextArea extends Component {
           maxLength={ !!this.props.maxLength ? this.props.maxLength : 'auto' }
         ></textarea>
         {
-          !!this.props.maxLength ? 
+          !!this.props.maxLength ?
             <div style={ styles.remaining }>{ this.props.maxLength - this.state.text.length } chars remaining.</div>
           :
             null
@@ -65,10 +66,10 @@ const styles = {
     border: 'none'
   },
   valid: {
-    
+
   },
   error: {
-    
+
   },
   remaining: {
     fontStyle: 'italic',

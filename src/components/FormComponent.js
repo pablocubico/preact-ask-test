@@ -1,7 +1,9 @@
-import { h, Component } from 'preact'
+import preact from 'preact'
+import * as Types from './Types'
+const { h, Component } = preact
 
 class FormComponent extends Component {
-  
+
   constructor(props, context) {
     super(props, context)
     this.state = {};
@@ -11,16 +13,16 @@ class FormComponent extends Component {
     return (
       <div>
         <h2>{ this.props.type }</h2>
-        { 
+        {
           h(
-            require('./' + this.props.type).default, 
+            Types[this.props.type],
             this.props
-          ) 
+          )
         }
       </div>
     )
   }
-  
+
 }
 
 const styles = {

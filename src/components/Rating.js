@@ -1,4 +1,6 @@
-import { h, Component } from 'preact';
+
+import preact from 'preact';
+const {Component, h} = preact;
 
 class Rating extends Component {
   constructor(props, context) {

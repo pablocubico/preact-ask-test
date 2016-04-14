@@ -1,4 +1,5 @@
-import { h, Component } from 'preact'
+import preact from 'preact'
+const { h, Component } = preact;
 
 class Audio extends Component {
   constructor(props, context) {
