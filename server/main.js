@@ -1,13 +1,10 @@
 
 import preact from 'preact';
 const {h} = preact;
-import Rating from '../src/components/Rating';
-import Audio from '../src/components/Audio';
+import FormComposer from '../src/components/FormComposer';
 
 preact.render((
   <div>
-    <p>Awesomeee</p>
-    <Audio />
-    <Rating />
+    <FormComposer {...props} />
   </div>
 ), document.body);
