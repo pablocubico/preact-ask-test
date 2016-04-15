@@ -190,12 +190,17 @@ class Audio extends Component {
     audioElement.play();
   }
 
+  onFocus() {
+    this.props.onFocus();
+  }
+
   render() {
     return (
       <div style={ styles.base }>
         <div style={ styles.buttonAndSpectrum }>
           <button 
             style={ this.getButtonStyle() } 
+            onFocus={ this.onFocus.bind(this) }
             onClick={ this.onRecordClick.bind(this) }>
             {
               this.state.recording ?
@@ -228,7 +233,6 @@ const styles = {
     color: '#888',
     padding: '20px 5%',
     width: '90%',
-    outline: 'none',
     border: 'none',
     minHeight: '100px'
   },
@@ -243,7 +247,9 @@ const styles = {
     transition: 'all 1s',
     boxShadow: '0 7px 8px #CCC',
     flexShrink: '0',
-    marginRight: '10px'
+    marginRight: '10px',
+    border: 'none',
+    outline: 'none'
   },
   stopButton: {
     width: '80px',
@@ -256,7 +262,9 @@ const styles = {
     transition: 'all 1s',
     boxShadow: '0 7px 8px #CCC',
     flexShrink: '0',
-    marginRight: '10px'
+    marginRight: '10px',
+    border:'none',
+    outline: 'none'
   },
   spectrumAnalyzer: {
     background: '#f0f0f0',

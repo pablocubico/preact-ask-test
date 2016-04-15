@@ -7,7 +7,8 @@ class Rating extends Component {
     super(props, context)
     this.state = {
       rating: 0,
-      hovering: 0
+      hovering: 0,
+      focused: -1
     }
   }
 
@@ -15,20 +16,29 @@ class Rating extends Component {
     return Object.assign({}, styles.base, this.props.isValid ? styles.valid : styles.error);
   }
 
+  onBlur() {
+    this.setState({ focused: -1 });
+  }
+
+  onFocus(i, e) {
+    this.setState({ focused: i });
+    this.props.onFocus();
+  }
+
   onHover(i, e) {
-    console.log("mouse over");
     this.setState({ hovering: i });
-    console.log(this.state);
-    this.forceUpdate();
   }
 
   onMouseOut() {
-    console.log("mouse out");
     this.setState({ hovering: 0 });
   }
 
   getTokenStyle(i) {
-    return Object.assign({}, styles.token, i < this.state.hovering ? styles.hovering : {}); 
+    return Object.assign({}, 
+      styles.token, 
+      i == this.state.focused ? styles.focused : {},
+      i < this.state.hovering ? styles.hovering : {}
+    ); 
   }
 
   getTokens() {
@@ -36,27 +46,40 @@ class Rating extends Component {
     var steps = this.props.steps || 5;
     for (var i = 0; i < steps; i++) {
       tokens.push(
-        <span 
+        <button 
+          onBlur={ this.onBlur.bind(this) }
+          onFocus={ this.onFocus.bind(this, i) }
           onMouseOver={ this.onHover.bind(this, i + 1) } 
           style={ this.getTokenStyle(i) }
         >
           &#9733;
-        </span>
+        </button>
       );
     }
     return tokens;
   }
 
+  getTitleStyles() {
+    return Object.assign({}, 
+      this.props.hasFocus ? styles.focusedTitle : {}
+    );
+  }
+
   render() {
-    console.log("render");
+
     return (
       <div style={ styles.base } onMouseOut={ this.onMouseOut.bind(this) }>
+        { 
+          !!this.props.title ? 
+            <h3 style={ this.getTitleStyles() }>{ this.props.title }</h3>
+          :
+            null
+        }
         {
           this.getTokens().map((token) => {
             return token
           })
         }
-        <h2>Hovering: { this.state.hovering }</h2>
       </div>
     )
   }
@@ -66,7 +89,6 @@ const styles = {
   base: {
     display: 'block',
     color: '#888',
-    padding: '20px 5%',
     width: '90%',
     outline: 'none',
     border: 'none',
@@ -75,12 +97,21 @@ const styles = {
   token: {
     fontSize: '50px',
     cursor: 'pointer',
-    color: '#ddd',
+    color: '#777',
     lineHeight: '50px',
-    transition: 'color .2s'
+    transition: 'color .2s',
+    background: 'none',
+    border: 'none',
+    outline: 'none'
   },
   hovering: {
-    color: '#eb8'
+    color: '#EF5350'
+  },
+  focused: {
+    color: '#42A5F5'
+  },
+  focusedTitle: {
+    color: '#009688'
   }
 }
 

@@ -11,14 +11,14 @@ class FormComponent extends Component {
 
   render() {
     return (
-      <div>
-        <h2>{ this.props.type }</h2>
-        {
-          h(
-            Types[this.props.type],
-            this.props
-          )
-        }
+      <div 
+        style={ styles.base }>
+          {
+            h(
+              Types[this.props.component],
+              Object.assign({}, this.props)
+            )
+          }
       </div>
     )
   }
@@ -27,6 +27,7 @@ class FormComponent extends Component {
 
 const styles = {
   base: {
+    
   }
 }
 

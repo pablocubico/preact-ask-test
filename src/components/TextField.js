@@ -1,34 +1,20 @@
 import preact from 'preact'
 const { h, Component } = preact
 
-class TextArea extends Component {
+class TextField extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      focused: false,
-      text: this.props.text || '',
-      height: '100px' // min textarea height,
+      text: this.props.text || ''
     }
   }
 
-  handleChange(e) {
-    var height = Math.max(parseInt(e.target.style.height), e.target.scrollHeight - 40);
-    this.setState({ text: e.target.value, height: height });
+  onKeyDown(e) {
+    this.setState({ text: e.target.value });
   }
 
-  getStyles() {
-    return Object.assign({}, 
-      styles.base, 
-      this.props.isValid ? styles.valid : styles.error, 
-      this.state.focused ? styles.focused : {},
-      { height: this.state.height }
-    );
-  }
-
-  getTitleStyles() {
-    return Object.assign({}, 
-      this.state.focused ? styles.focusedTitle : {}
-    );
+  onChange(e) {
+    this.setState({ text: e.target.value });
   }
 
   onBlur() {
@@ -40,6 +26,20 @@ class TextArea extends Component {
     this.props.onFocus();
   }
 
+  getStyles() {
+    return Object.assign({}, 
+      styles.base, 
+      this.props.isValid ? styles.valid : styles.error,
+      this.state.focused ? styles.focused : {}
+    );
+  }
+
+  getTitleStyles() {
+    return Object.assign({}, 
+      this.state.focused ? styles.focusedTitle : {}
+    );
+  }
+
   render() {
     return (
       <div>
@@ -49,15 +49,16 @@ class TextArea extends Component {
           :
             null
         }
-        <textarea
+        <input type="text"
           style={ this.getStyles() }
           placeholder={this.props.placeholder}
           defaultValue={ this.state.text }
-          onBlur={ this.onBlur.bind(this) }
           onFocus={ this.onFocus.bind(this) }
-          onChange={this.handleChange.bind(this)}
-          maxLength={ !!this.props.maxLength ? this.props.maxLength : 'auto' }
-        ></textarea>
+          onBlur={ this.onBlur.bind(this) }
+          onChange={this.onChange.bind(this)}
+          onKeyDown={this.onKeyDown.bind(this)}
+          maxLength={ !!this.props.maxLength ? this.props.maxLength : 'auto' }         
+        />
         {
           !!this.props.maxLength ?
             <div style={ styles.remaining }>{ this.props.maxLength - this.state.text.length } chars remaining.</div>
@@ -78,9 +79,9 @@ const styles = {
     width: '100%',
     outline: 'none',
     resize: 'none',
-    borderTop: 'none',
     borderLeft: 'none',
     borderRight: 'none',
+    borderTop: 'none',
     borderBottom: '2px solid #999',
     transition: 'border .5s'
   },
@@ -99,10 +100,11 @@ const styles = {
   remaining: {
     color: '#999',
     fontSize: '10pt',
+    padding: '0px',
     textAlign: 'right',
     width: '100%',
-    marginTop: '20px',
+    marginTop: '5px',
   }
 }
 
-export default TextArea;
+export default TextField;

@@ -1,12 +1,14 @@
 // import 'lie';
 // import 'isomorphic-fetch';
 import { h, render } from 'preact';
-import './style';
+import './style/index.css';
+
+var SampleFormProps = require('./SampleForm');
 
 let root;
 function init() {
 	let FormComposer = require('./components/FormComposer').default;
-	root = render(<FormComposer />, document.body, root);
+	root = render(<FormComposer {...SampleFormProps} />, document.body, root);
 }
 
 init();
