@@ -7,7 +7,7 @@ var rollup = require('rollup')
 var babel = require('rollup-plugin-babel')
 var nodeResolve = require('rollup-plugin-node-resolve')
 var uglify = require('rollup-plugin-uglify')
-var postcss = require('rollup-plugin-postcss')
+var uuid = require('node-uuid')
 
 var app = express()
 app.use(compress())
@@ -29,8 +29,9 @@ app.get('/preview.js', function(req, res) {
 
 app.post('/create', function(req, res){
   buildWidget(req.body).then(function(code){
-    fs.writeFile(path.join(__dirname, 'widgets', '1234.js'), code, function(err){
-      res.send('ok')
+    var uid = uuid.v4()
+    fs.writeFile(path.join(__dirname, 'widgets', uid + '.js'), code, function(err){
+      res.send(uid)
     })
   })
   .catch(function(err){ res.status(500).send(err.stack) })
@@ -42,10 +43,9 @@ function buildWidget(props) {
   return new Promise(function(resolve, reject){
     rollup.rollup({
       entry: 'main.js',
-      plugins: [ 
-        postcss(),
-        babel(), 
-        nodeResolve({jsnext: true, main: true}), 
+      plugins: [
+        babel(),
+        nodeResolve({jsnext: true, main: true}),
         uglify({mangle: true})
       ],
     }).then(function(bundle){
