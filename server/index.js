@@ -7,6 +7,7 @@ var rollup = require('rollup')
 var babel = require('rollup-plugin-babel')
 var nodeResolve = require('rollup-plugin-node-resolve')
 var uglify = require('rollup-plugin-uglify')
+var postcss = require('rollup-plugin-postcss')
 
 var app = express()
 app.use(compress())
@@ -41,7 +42,12 @@ function buildWidget(props) {
   return new Promise(function(resolve, reject){
     rollup.rollup({
       entry: 'main.js',
-      plugins: [babel(), nodeResolve({jsnext: true, main: true}), uglify({mangle: true})],
+      plugins: [ 
+        postcss(),
+        babel(), 
+        nodeResolve({jsnext: true, main: true}), 
+        uglify({mangle: true})
+      ],
     }).then(function(bundle){
       var result = bundle.generate({
         intro: 'var props = ' + JSON.stringify(props) + ';',
