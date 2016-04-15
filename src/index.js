@@ -3,7 +3,7 @@
 import { h, render } from 'preact';
 import './style/index.css';
 
-var SampleFormProps = require('./SampleForm');
+var SampleFormProps = require('../server/sample-form.json');
 
 let root;
 function init() {
