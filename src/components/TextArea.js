@@ -43,12 +43,6 @@ class TextArea extends Component {
   render() {
     return (
       <div>
-        { 
-          !!this.props.title ? 
-            <h3 style={ this.getTitleStyles() }>{ this.props.title }</h3>
-          :
-            null
-        }
         <textarea
           style={ this.getStyles() }
           placeholder={this.props.placeholder}

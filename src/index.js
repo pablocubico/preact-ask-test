@@ -1,20 +1,21 @@
-// import 'lie';
-// import 'isomorphic-fetch';
 import { h, render } from 'preact';
 import './style/index.css';
 
-var SampleFormProps = require('../server/sample-form.json');
+var SampleFormProps = require('./components/sample-form.json');
 
 let root;
 function init() {
-	let FormComposer = require('./components/FormComposer').default;
-	root = render(<FormComposer {...SampleFormProps} />, document.body, root);
+	let AskComposer = require('./components/AskComposer').default;
+	root = render(<AskComposer {...SampleFormProps} />, document.body, root);
 }
 
 init();
 
 if (module.hot) {
-	module.hot.accept('./components/FormComposer', () => requestAnimationFrame( () => {
+
+	console.log("Module . hot");
+
+	module.hot.accept('webpack/hot/dev-server', () => requestAnimationFrame( () => {
 		flushLogs();
 		init();
 	}) );

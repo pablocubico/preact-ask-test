@@ -1,4 +1,3 @@
-
 import preact from 'preact';
 const {Component, h} = preact;
 
@@ -69,12 +68,6 @@ class Rating extends Component {
 
     return (
       <div style={ styles.base } onMouseOut={ this.onMouseOut.bind(this) }>
-        { 
-          !!this.props.title ? 
-            <h3 style={ this.getTitleStyles() }>{ this.props.title }</h3>
-          :
-            null
-        }
         {
           this.getTokens().map((token) => {
             return token

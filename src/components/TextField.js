@@ -1,12 +1,19 @@
 import preact from 'preact'
 const { h, Component } = preact
 
-class TextField extends Component {
+import AskWidget from './AskWidget';
+
+class TextField extends AskWidget {
+
   constructor(props, context) {
     super(props, context)
-    this.state = {
-      text: this.props.text || ''
-    }
+    // extend the state from AskWidget
+    this.state = Object.assign(
+      this.state,
+      {
+        text: this.props.text || ''
+      }
+    );
   }
 
   onKeyDown(e) {
@@ -18,7 +25,22 @@ class TextField extends Component {
   }
 
   onBlur() {
-    this.setState({ focused: false });
+    if (!!this.state.text.length) {
+      this.setState({ focused: false, completed: true, isValid: true });
+    } else {
+      this.setState({ focused: false, completed: false });
+    }
+    if (this.props.validateAs) {
+      switch (this.props.validateAs) {
+        case "email":
+          var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          this.setState({ isValid: emailRegex.test(this.state.text) });
+        break;
+        case "url":
+        break;
+      }
+    }
+    (this.save.bind(this))();  
   }
 
   onFocus() {
@@ -34,21 +56,9 @@ class TextField extends Component {
     );
   }
 
-  getTitleStyles() {
-    return Object.assign({}, 
-      this.state.focused ? styles.focusedTitle : {}
-    );
-  }
-
   render() {
     return (
       <div>
-        { 
-          !!this.props.title ? 
-            <h3 style={ this.getTitleStyles() }>{ this.props.title }</h3>
-          :
-            null
-        }
         <input type="text"
           style={ this.getStyles() }
           placeholder={this.props.placeholder}
@@ -87,9 +97,6 @@ const styles = {
   },
   focused: {
     borderBottom: '2px solid #009688'  
-  },
-  focusedTitle: {
-    color: '#009688'
   },
   valid: {
 
