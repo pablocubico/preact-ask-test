@@ -1,12 +1,16 @@
 
-import rating from './Rating'
-import audio from './Audio'
-import textarea from './TextArea'
-import textField from './TextField'
-import header from './Header'
+import Rating from './Rating';
+import Audio from './Audio';
+import TextArea from './TextArea';
+import TextField from './TextField';
+import Header from './Header';
+import Drawer from './Drawer';
 
-export const Rating = rating
-export const Audio = audio
-export const TextArea = textarea
-export const TextField = textField
-export const Header = header
+export {
+  Rating,
+  Audio,
+  TextArea,
+  TextField,
+  Header,
+  Drawer
+};

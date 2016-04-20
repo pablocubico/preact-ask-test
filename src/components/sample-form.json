@@ -66,6 +66,12 @@
 				"props": {
 					"steps": 5
 				}
+			},
+			{
+				"type": "field",
+				"component": "Drawer",
+				"title": "Draw something for us",
+				"props": {}
 			}
 		]
 	}
